@@ -6,39 +6,63 @@
     <title>Lista de Suscriptores</title>
     <!-- Incluir Tailwind CSS desde el CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Incluir Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     <!-- Incluir Iconify -->
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+    <style>
+        /* Custom styles to make the table look less like a traditional table */
+        th, td {
+            padding: 12px 16px;
+        }
+        th {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 36px;
+        }
+        td {
+            font-family: 'Lora', serif;
+            font-weight: 400;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 50px;
+        }
+        tr:last-child td {
+            border-bottom: none; /* Remove border for the last row */
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-r from-gray-100 via-gray-300 to-gray-100 font-sans leading-normal tracking-normal">
-    <div class="container mx-auto mt-10 p-6">
-        <div class="bg-white p-8 rounded-lg shadow-lg">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-8 border-b-2 pb-4">GRACIAS SUSCRIPTORES</h1>
-            <table class="min-w-full bg-white">
-                <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+<body class="bg-white font-sans leading-normal tracking-normal">
+    <div class="w-full p-4">
+        <div class="bg-white p-8">
+            <h1 class="text-6xl font-bold text-left text-gray-800 mb-8 pb-4" style="font-family: 'Lora', serif;">GRACIAS SUSCRIPTORES</h1>
+            <table class="w-full bg-white">
+                <thead>
                     <tr>
-                        <th></th>
-                        <th class="py-3 px-6 text-left">Nombre</th>
-                        <th class="py-3 px-6 text-left">Nivel</th>
-                        <th class="py-3 px-6 text-left">Subs Regaladas</th>
+                        <th class="text-center"></th>
+                        <th class="text-left">Nombre</th>
+                        <th class="text-center">Nivel</th>
+                        <th class="text-center">Subs Regaladas</th>
                     </tr>
                 </thead>
-                <tbody id="nombres-lista" class="text-gray-700 text-sm">
-                    <tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:ghost" style="color: #46e970; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>RichVip</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>5</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:robot" style="color: #03ab9b; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>RafaBadajoz</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>1</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:rocket" style="color: #cd6ff8; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>z0mb13m0rf0</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>1</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:ghost" style="color: #a5bd9b; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>Maverick9013</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:ghost" style="color: #3e1cda; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>ratse73</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:space-invader" style="color: #c1187c; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>Ismael_1985</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:robot" style="color: #6d3b59; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>enriquetecfan</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:space-invader" style="color: #28db12; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>manoloergalleta35</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:rocket" style="color: #8f6204; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>Puleador</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:ghost" style="color: #a1141a; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>diegoct83</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:space-invader" style="color: #18d2a9; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>academia_sd</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:rocket" style="color: #af48bc; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>waltergd22</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:space-invader" style="color: #acdb0f; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>pcacermo</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:rocket" style="color: #17c789; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>Weaita7</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:rocket" style="color: #085c87; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>FegelShark</td><td class='py-3 px-6 text-left'>1000</td><td class='py-3 px-6 text-left'>0</td></tr>
-<tr><td class='py-3 px-6 text-left'><span class="iconify" data-icon="mdi:space-invader" style="color: #fba2f2; font-size: 32px;"></span></td><td class='py-3 px-6 text-left'>patriciofernandezia</td><td class='py-3 px-6 text-left'>3000</td><td class='py-3 px-6 text-left'>0</td></tr>
+                <tbody id="nombres-lista" class="text-gray-700 text-lg">
+                    <tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:alien" style="color: #8ccae3; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>RichVip</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>5</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:dog" style="color: #142e42; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>RafaBadajoz</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>1</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:lightbulb" style="color: #357723; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>z0mb13m0rf0</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>1</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:tree" style="color: #279f89; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>Maverick9013</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:home" style="color: #303256; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>ratse73</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:sword-cross" style="color: #766453; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>Ismael_1985</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:cloud" style="color: #ae9992; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>enriquetecfan</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:cat" style="color: #bbbba6; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>manoloergalleta35</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:tree" style="color: #d0c4a5; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>Puleador</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:flower" style="color: #f49a92; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>diegoct83</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:ghost" style="color: #a84c5a; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>academia_sd</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:heart" style="color: #4ec2a9; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>waltergd22</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:apple" style="color: #30a47b; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>pcacermo</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:headphones" style="color: #628321; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>Weaita7</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
+<tr><td class='py-3 px-6 text-center'><span class="iconify" data-icon="mdi:home" style="color: #145166; font-size: 70px;"></span></td><td class='py-3 px-6 text-left'>FegelShark</td><td class='py-3 px-6 text-center'>1000</td><td class='py-3 px-6 text-center'>0</td></tr>
                 </tbody>
             </table>
         </div>
