@@ -136,7 +136,7 @@ if access_token:
             with open(template_html_filename, 'r', encoding='utf-8') as file:
                 html_template = file.read()
 
-        # Generar el contenido de las filas de la tabla
+            # Generar el contenido de las filas de la tabla
             for subscriber in data:
                 # Contar cuántas veces el nombre del suscriptor aparece como gifter_name
                 gift_count = sum(1 for other_subscriber in data if other_subscriber.get('gifter_name') == subscriber['user_name'])
@@ -146,21 +146,21 @@ if access_token:
             # Ordenar los suscriptores por 'gift_count' de mayor a menor
             sorted_data = sorted(data, key=lambda x: x['gift_count'], reverse=True)
 
-            # Asignar medallas
+            # Asignar medallas usando iconos de Iconify
             if sorted_data:
-                sorted_data[0]['medal'] = 'gold_medal.png'  # Medalla de oro al que más regalos ha hecho
+                sorted_data[0]['medal'] = '<span class="iconify" data-icon="emojione:1st-place-medal" style="color: #ffd700;"></span>'  # Medalla de oro
                 for i in range(1, len(sorted_data)):
                     if sorted_data[i]['gift_count'] > 0:
-                        sorted_data[i]['medal'] = 'silver_medal.png'  # Medalla de plata para los que han hecho regalos, pero no son los mejores
+                        sorted_data[i]['medal'] = '<span class="iconify" data-icon="emojione:2nd-place-medal" style="color: #c0c0c0;"></span>'  # Medalla de plata
                     else:
-                        sorted_data[i]['medal'] = 'bronze_medal.png'  # Medalla de bronce para los que no han hecho regalos
+                        sorted_data[i]['medal'] = '<span class="iconify" data-icon="emojione:3rd-place-medal" style="color: #cd7f32;"></span>'  # Medalla de bronce
 
-            # Generar las filas HTML
+            # Generar las filas HTML con la medalla como primera columna
             rows_html = "\n".join([
                 f"<tr>"
+                f"<td class='py-3 px-6 text-left'>{subscriber['medal']}</td>"
                 f"<td class='py-3 px-6 text-left'>{subscriber['user_name']}</td>"
                 f"<td class='py-3 px-6 text-left'>{subscriber['tier']}</td>"
-                f"<td class='py-3 px-6 text-left'><img src='{subscriber['medal']}' alt='Medal' style='width:24px; height:24px;'></td>"
                 f"<td class='py-3 px-6 text-left'>{subscriber['gift_count']}</td>"
                 f"</tr>"
                 for subscriber in sorted_data
