@@ -5,7 +5,6 @@ import csv
 import random
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium import webdriver
-from dotenv import load_dotenv
 import time
 
 # Cargar las variables de entorno desde el archivo .env manualmente
@@ -28,7 +27,6 @@ def load_env():
 # Configuración de la aplicación
 def get_config():
     env_vars = load_env()
-    print(env_vars)
     return {
         'client_id': env_vars.get('CLIENT_ID'),
         'client_secret': env_vars.get('CLIENT_SECRET'),
@@ -38,18 +36,14 @@ def get_config():
     }
 
 # Función para guardar tokens en un archivo
-def save_tokens(token_file, access_token, refresh_token):
-    tokens = {
-        'access_token': access_token,
-        'refresh_token': refresh_token
-    }
+def save_tokens(token_file, tokens):
     with open(token_file, 'w') as file:
         json.dump(tokens, file)
 
 # Función para cargar tokens desde un archivo
 def load_tokens(token_file):
-    if os.path.exists(ruta + "//" + token_file):
-        with open(ruta + "//" + token_file, 'r') as file:
+    if os.path.exists(token_file):
+        with open(token_file, 'r') as file:
             return json.load(file)
     return None
 
@@ -66,7 +60,7 @@ def get_new_tokens(config):
 
     if response.status_code == 200:
         tokens = response.json()
-        save_tokens(config['token_file'], tokens['access_token'], tokens['refresh_token'])
+        save_tokens(config['token_file'], tokens)
         return tokens['access_token']
     else:
         print("Error al obtener el token de acceso:", response.json())
@@ -84,7 +78,7 @@ def refresh_access_token(config, refresh_token):
 
     if response.status_code == 200:
         new_tokens = response.json()
-        save_tokens(config['token_file'], new_tokens['access_token'], new_tokens['refresh_token'])
+        save_tokens(config['token_file'], new_tokens)
         return new_tokens['access_token']
     else:
         print("Error al renovar el token de acceso:", response.json())
@@ -94,8 +88,10 @@ def refresh_access_token(config, refresh_token):
 def get_access_token(config):
     tokens = load_tokens(config['token_file'])
     if tokens:
+        # Intentar renovar el token de acceso usando el refresh token
         return refresh_access_token(config, tokens['refresh_token'])
     else:
+        # Si no hay tokens, obtener uno nuevo usando el authorization_code
         return get_new_tokens(config)
 
 # Función para asignar medallas (opcional)
@@ -111,7 +107,7 @@ def assign_medals(subscribers):
 # Función para cargar la lista de iconos desde un archivo JSON
 def load_icons_from_json(json_filename):
     try:
-        with open(ruta + "//" + json_filename, 'r', encoding='utf-8') as file:
+        with open(os.path.join(ruta, json_filename), 'r', encoding='utf-8') as file:
             data = json.load(file)
         return data.get('icons', [])
     except Exception as e:
@@ -186,7 +182,7 @@ def take_screenshot(html_file_path, output_image_path):
     driver.execute_script("document.body.style.zoom='50%'")
 
     # Tomar una captura de pantalla
-    driver.save_screenshot(ruta + "//" + output_image_path)
+    driver.save_screenshot(os.path.join(ruta, output_image_path))
 
     # Cerrar el navegador
     driver.quit()
@@ -216,7 +212,7 @@ def get_subscribers(headers, user_id):
 
 # Función para guardar los suscriptores en un archivo CSV
 def save_subscribers_to_csv(subscribers, csv_filename):
-    with open(ruta + "//" + csv_filename, mode='w', newline='', encoding='utf-8') as file:
+    with open(os.path.join(ruta, csv_filename), mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         # Escribir los encabezados
         writer.writerow(['User ID', 'User Name', 'User Login', 'Plan Name', 'Tier', 'Is Gift', 'Gifter Name'])
@@ -238,7 +234,7 @@ def process_subscribers_from_csv(csv_filename):
     subscribers = []
 
     # Leer los datos desde el archivo CSV
-    with open(ruta + "//" + csv_filename, mode='r', newline='', encoding='utf-8') as file:
+    with open(os.path.join(ruta, csv_filename), mode='r', newline='', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
             # Convertir los campos necesarios de texto a los tipos correctos si es necesario
@@ -254,15 +250,15 @@ def process_subscribers_from_csv(csv_filename):
 
 # Función para generar el HTML con la lista de suscriptores
 def generate_html(template_html_filename, output_html_filename, rows_html):
-    with open(ruta + "//" + template_html_filename, 'r', encoding='utf-8') as file:
+    with open(os.path.join(ruta, template_html_filename), 'r', encoding='utf-8') as file:
         html_template = file.read()
 
     html_content = html_template.replace("<!-- PLACEHOLDER -->", rows_html)
 
-    with open(ruta + "//" + output_html_filename, 'w', encoding='utf-8') as file:
+    with open(os.path.join(ruta, output_html_filename), 'w', encoding='utf-8') as file:
         file.write(html_content)
 
-    print(f"Archivo HTML generado: {ruta + '//' + output_html_filename}")
+    print(f"Archivo HTML generado: {os.path.join(ruta, output_html_filename)}")
 
 def peticion():
     load_env()
@@ -288,23 +284,24 @@ def peticion():
 
     csv_filename = 'suscriptores.csv'
     save_subscribers_to_csv(subscribers, csv_filename)
-    print(f"La lista de suscriptores se ha guardado en '{ruta + '//' + csv_filename}'.")
+    print(f"La lista de suscriptores se ha guardado en '{os.path.join(ruta, csv_filename)}'.")
     return subscribers
 
 # Función principal para generar el HTML y tomar la captura de pantalla
 def main():
     global ruta
-    #Para que el obs lo procese
+    # Para que el obs lo procese
     ruta = r"C:\Users\Patricio\Documents\Clases Video\Directos\personalizacion\SubsTwitch"
     subscribers = peticion()
 
-    sorted_subscribers = process_subscribers_from_csv('suscriptores.csv')
-    rows_html = generate_table_rows(sorted_subscribers)
+    if subscribers:
+        sorted_subscribers = process_subscribers_from_csv('suscriptores.csv')
+        rows_html = generate_table_rows(sorted_subscribers)
 
-    output_html_filename = 'index_con_placeholder.html'
-    generate_html('template.html', output_html_filename, rows_html)
+        output_html_filename = 'index_con_placeholder.html'
+        generate_html('template.html', output_html_filename, rows_html)
 
-    take_screenshot(output_html_filename, 'screenshot.png')
+        take_screenshot(output_html_filename, 'screenshot.png')
 
 if __name__ == '__main__':
     main()
