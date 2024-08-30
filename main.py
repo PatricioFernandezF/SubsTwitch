@@ -179,7 +179,7 @@ def take_screenshot(html_file_path, output_image_path):
     time.sleep(2)  # Aumentar el tiempo de espera si es necesario
 
     # Configurar el nivel de zoom al 50% utilizando JavaScript
-    driver.execute_script("document.body.style.zoom='50%'")
+    driver.execute_script("document.body.style.zoom='30%'")
 
     # Tomar una captura de pantalla
     driver.save_screenshot(os.path.join(ruta, output_image_path))
@@ -202,13 +202,23 @@ def get_user_id(headers, twitch_username):
 # Función para obtener la lista de suscriptores
 def get_subscribers(headers, user_id):
     url = f'https://api.twitch.tv/helix/subscriptions?broadcaster_id={user_id}'
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-        return response.json()['data']
-    else:
-        print("Error al obtener la lista de suscriptores:", response.json())
-        return None
+    all_subscribers = []
+    while url:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            all_subscribers.extend(data['data'])
+            # Si hay un cursor de paginación, se actualiza la URL para la próxima solicitud
+            if 'pagination' in data and 'cursor' in data['pagination']:
+                cursor = data['pagination']['cursor']
+                url = f'https://api.twitch.tv/helix/subscriptions?broadcaster_id={user_id}&after={cursor}'
+            else:
+                # Si no hay más páginas, se detiene el ciclo
+                url = None
+        else:
+            print("Error al obtener la lista de suscriptores:", response.json())
+            return None
+    return all_subscribers
 
 # Función para guardar los suscriptores en un archivo CSV
 def save_subscribers_to_csv(subscribers, csv_filename):
